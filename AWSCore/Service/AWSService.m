@@ -227,6 +227,7 @@ NSString *const AWSServiceNameSTS = @"sts";
         case AWSRegionCNNorth1:
             return AWSRegionNameCNNorth1;
         case AWSRegionUSGovWest1:
+        case AWSRegionFIPSUSGovWest1:
             return AWSRegionNameUSGovWest1;
         default:
             return nil;
@@ -293,7 +294,8 @@ NSString *const AWSServiceNameSTS = @"sts";
             || regionType == AWSRegionAPNortheast1
             || regionType == AWSRegionAPSoutheast2
             || regionType == AWSRegionSAEast1
-            || regionType == AWSRegionUSGovWest1)) {
+            || regionType == AWSRegionUSGovWest1
+            || regionType == AWSRegionFIPSUSGovWest1)) {
             separator = @"-";
         }
 
@@ -304,6 +306,8 @@ NSString *const AWSServiceNameSTS = @"sts";
 
     if (serviceType == AWSServiceS3 && regionType == AWSRegionUSEast1) {
         URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@://s3.amazonaws.com", HTTPType]];
+    }else if (serviceType == AWSServiceS3 && regionType == AWSRegionFIPSUSGovWest1) {
+        URL = [NSURL URLWithString:@"https://s3-fips-us-gov-west-1.amazonaws.com"];
     } else if (serviceType == AWSServiceSTS) {
         if (regionType == AWSRegionCNNorth1) {
             URL = [NSURL URLWithString:@"https://sts.cn-north-1.amazonaws.com"];
